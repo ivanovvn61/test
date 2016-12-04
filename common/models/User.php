@@ -206,6 +206,24 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = Yii::$app->security->generateRandomString()
             . '_' . time();
     }
+
+    /**
+     * Finds out if password reset token is valid
+     *
+     * @param string $token password reset token
+     * @return bool
+     */
+    public static function isPasswordResetTokenValid($token)
+    {
+        if (empty($token)) {
+            return false;
+        }
+
+        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        return $timestamp + $expire >= time();
+    }
+
     /**
      * Removes password reset token
      */
@@ -341,4 +359,6 @@ class User extends ActiveRecord implements IdentityInterface
         $options = [];
         return Html::a($this->username, $url, $options);
     }
+
+
 }
