@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use yii\debug\models\search\Profile;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "gender".
@@ -13,7 +13,7 @@ use yii\debug\models\search\Profile;
  *
  * @property Profile[] $profiles
  */
-class Gender extends \yii\db\ActiveRecord
+class Gender extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class Gender extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'gender_name' => 'Gender Name',
+            'gender_name' => 'Gender',
         ];
     }
 

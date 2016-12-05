@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "kartik-v/yii2-social": "dev-master",
         "yiisoft/yii2-authclient": "*",
-        "fortawesome/font-awesome": "4.2.0"
+        "fortawesome/font-awesome": "4.2.0",
+        "yiisoft/yii2-jui": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

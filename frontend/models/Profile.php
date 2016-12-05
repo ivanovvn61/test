@@ -26,7 +26,7 @@ use yii\helpers\Url;
  * @property Gender $gender
  * @property User $user
  */
-class Profile extends \yii\db\ActiveRecord
+class Profile extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -44,7 +44,7 @@ class Profile extends \yii\db\ActiveRecord
         return [
             [['user_id', 'gender_id'], 'required'],
             [['user_id', 'gender_id'], 'integer'],
-            [['birthdate', 'created_at', 'updated_at'], 'safe'],
+            [['birthdate','created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name'], 'string', 'max' => 45],
             [['gender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Gender::className(), 'targetAttribute' => ['gender_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
@@ -114,6 +114,7 @@ class Profile extends \yii\db\ActiveRecord
     }
     /**
      * get list of genders for dropdown
+     * return @array
      */
     public static function getGenderList()
     {
@@ -152,4 +153,18 @@ class Profile extends \yii\db\ActiveRecord
         $options = [];
         return Html::a($this->id, $url, $options);
     }
+
+    /**
+     * @return bool
+     */
+    public function beforeValidate()
+    {
+        if ($this->birthdate != null) {
+            $new_date_format = date('Y-m-d', strtotime($this->birthdate));
+            $this->birthdate = $new_date_format;
+        }
+        return parent::beforeValidate();
+    }
+
+
 }
