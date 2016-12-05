@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 
+use common\models\PermissionHelpers;
 use Yii;
 use frontend\models\Profile;
 use common\models\RecordHelpers;
@@ -28,9 +29,20 @@ class ProfileController extends Controller
                 'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@']
+                    ]
+                ],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback'=>function($rule, $action)
+                        {
+                            return PermissionHelpers::requireStatus('Active');
+                        }
                     ]
                 ]
             ],
@@ -133,6 +145,8 @@ class ProfileController extends Controller
                 'model' => $model,
             ]);
         }*/
+        PermissionHelpers::requireUpgradeTo('Paid');
+
         $userId = Yii::$app->user->identity->id;
         $model = Profile::find()->where(['user_id' => $userId])->one();
         if ($model !== null) {
