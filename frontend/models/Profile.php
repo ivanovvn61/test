@@ -44,12 +44,13 @@ class Profile extends ActiveRecord
         return [
             [['user_id', 'gender_id'], 'required'],
             [['user_id', 'gender_id'], 'integer'],
-            [['birthdate','created_at', 'updated_at'], 'safe'],
+            [['birthdate', 'created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name'], 'string', 'max' => 45],
             [['gender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Gender::className(), 'targetAttribute' => ['gender_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
+
     /**
      * behaviors to control time stamp, don't forget to use statement for expression
      *
@@ -112,6 +113,7 @@ class Profile extends ActiveRecord
     {
         return $this->gender->gender_name;
     }
+
     /**
      * get list of genders for dropdown
      * return @array
@@ -121,6 +123,7 @@ class Profile extends ActiveRecord
         $droptions = Gender::find()->asArray()->all();
         return ArrayHelper::map($droptions, 'id', 'gender_name');
     }
+
     /**
      * @get Username
      */
@@ -128,6 +131,7 @@ class Profile extends ActiveRecord
     {
         return $this->user->username;
     }
+
     /**
      * @getUserId
      */
@@ -135,21 +139,23 @@ class Profile extends ActiveRecord
     {
         return $this->user ? $this->user->id : 'none';
     }
+
     /**
      * @getUserLink
      */
     public function getUserLink()
     {
-        $url = Url::to(['user/view', 'id'=>$this->UserId]);
+        $url = Url::to(['user/view', 'id' => $this->user_id]);
         $options = [];
         return Html::a($this->getUsername(), $url, $options);
     }
+
     /**
      * @getProfileLink
      */
     public function getProfileIdLink()
     {
-        $url = Url::to(['profile/update', 'id'=>$this->id]);
+        $url = Url::to(['profile/update', 'id' => $this->id]);
         $options = [];
         return Html::a($this->id, $url, $options);
     }

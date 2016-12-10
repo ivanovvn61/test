@@ -14,7 +14,6 @@ use yii\jui\DatePicker;
     <?php $form = ActiveForm::begin(); ?>
 
 
-
     <?= $form->field($model, 'first_name')->textInput(['maxlength' => 45]) ?>
 
     <?= $form->field($model, 'last_name')->textInput(['maxlength' => 45]) ?>
