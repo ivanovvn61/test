@@ -4,14 +4,13 @@ namespace frontend\controllers;
 
 
 use common\models\PermissionHelpers;
-use Yii;
-use frontend\models\Profile;
 use common\models\RecordHelpers;
-use frontend\models\search\ProfileSearch;
+use frontend\models\Profile;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ProfileController implements the CRUD actions for Profile model.

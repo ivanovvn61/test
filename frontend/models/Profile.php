@@ -166,11 +166,32 @@ class Profile extends ActiveRecord
     public function beforeValidate()
     {
         if ($this->birthdate != null) {
-            $new_date_format = date('Y-m-d', strtotime($this->birthdate));
-            $this->birthdate = $new_date_format;
+            //if ($this->isStrDate($this->birthdate)) {
+                $temp = strtotime($this->birthdate);
+                $new_date_format = date('Y-m-d', strtotime($this->birthdate));
+                $this->birthdate = $new_date_format;
+            /*} else {
+                $this->addError('birthdate', 'Неправильная дата');
+
+            }*/
+
         }
         return parent::beforeValidate();
     }
 
+    /**
+     * @param string $date
+     * @return bool
+     */
+    private function isStrDate($date)
+    {
+        $temp = strtotime($date);
+        $tempDate = explode('-', $temp);
+        if (checkdate($tempDate[1], $tempDate[2], $tempDate[0])) {//checkdate(month, day, year)
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

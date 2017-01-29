@@ -7,7 +7,7 @@
  */
 namespace common\models;
 
-use yii;
+use Yii;
 
 Class RecordHelpers
 {
